@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Nico & Santi!</title>
-<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #08081a; display: flex; justify-content: center; align-items: center; font-family: 'Nunito', sans-serif; padding: 20px 8px; min-height: 100vh; background-attachment: fixed; overflow-x: hidden; }
@@ -51,14 +51,12 @@
   @keyframes gBlue { from { filter: drop-shadow(0 0 8px rgba(100,100,255,0.6)); } to { filter: drop-shadow(0 0 20px rgba(140,140,255,1)); } }
 
   .audio-container { display: none; }
-
   .star-row { text-align: center; color: #ffdd00; font-size: 13px; letter-spacing: 5px; margin: 3px 0 8px; z-index: 2; position: relative; animation: pulse 2.2s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
 
   .characters { display: flex; justify-content: center; gap: 14px; margin: 4px 0 6px; position: relative; z-index: 2; min-height: 220px; }
   .char-wrap { display: flex; flex-direction: column; align-items: center; position: relative; transition: all 0.5s ease-in-out; }
   
-  /* ESTILOS CUANDO SE SUELTAN POR LA PANTALLA (A LOS 45s) */
   .char-wrap.roaming {
     position: fixed !important;
     z-index: 9999 !important;
@@ -66,73 +64,66 @@
     width: 140px;
   }
 
-  /* ANIMACIONES BASE DE BAILE EN SU SITIO */
-  .char-wrap:nth-child(1) { animation: danceSanti 1s ease-in-out infinite; }
-  .char-wrap:nth-child(2) { animation: danceNico 1.1s ease-in-out infinite; animation-delay: 0.15s; }
+  /* BALANCEO MINECRAFT */
+  .char-wrap:nth-child(1) { animation: mcDanceSanti 1.2s ease-in-out infinite; }
+  .char-wrap:nth-child(2) { animation: mcDanceNico 1.4s ease-in-out infinite; animation-delay: 0.15s; }
 
-  @keyframes danceSanti {
-    0%, 100% { transform: translateY(0) rotate(-3deg); }
-    50% { transform: translateY(-12px) rotate(4deg); }
+  @keyframes mcDanceSanti {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-8px) rotate(3deg); }
   }
-  @keyframes danceNico {
-    0%, 100% { transform: translateY(0) rotate(3deg); }
-    50% { transform: translateY(-12px) rotate(-4deg); }
-  }
-
-  /* ANIMACIÓN DE EXTREMIDADES (BRAZOS Y PIERNAS) */
-  .leg-l { animation: danceLegL 1s ease-in-out infinite; transform-origin: 50px 115px; }
-  .leg-r { animation: danceLegR 1s ease-in-out infinite; transform-origin: 80px 115px; }
-  .arm-l { animation: danceArmL 1s ease-in-out infinite; transform-origin: 40px 105px; }
-  .arm-r { animation: danceArmR 1s ease-in-out infinite; transform-origin: 90px 105px; }
-  
-  .char-wrap:nth-child(2) .leg-l { animation: danceLegL 1.1s ease-in-out infinite; animation-delay: 0.15s; }
-  .char-wrap:nth-child(2) .leg-r { animation: danceLegR 1.1s ease-in-out infinite; animation-delay: 0.15s; }
-  .char-wrap:nth-child(2) .arm-l { animation: danceArmL 1.1s ease-in-out infinite; animation-delay: 0.15s; }
-  .char-wrap:nth-child(2) .arm-r { animation: danceArmR 1.1s ease-in-out infinite; animation-delay: 0.15s; }
-
-  @keyframes danceLegL {
-    0%, 100% { transform: scaleY(1); }
-    50% { transform: scaleY(0.7) skewX(10deg); }
-  }
-  @keyframes danceLegR {
-    0%, 100% { transform: scaleY(0.7) skewX(-10deg); }
-    50% { transform: scaleY(1); }
-  }
-  @keyframes danceArmL {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(-45deg) translateY(-5px); }
-  }
-  @keyframes danceArmR {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(45deg) translateY(-5px); }
+  @keyframes mcDanceNico {
+    0%, 100% { transform: translateY(0) rotate(2deg); }
+    50% { transform: translateY(-8px) rotate(-2deg); }
   }
 
-  .speech { position: absolute; top: -26px; background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.28); border-radius: 10px; padding: 3px 9px; font-size: 11px; color: #fff; white-space: nowrap; z-index: 5; }
-  .speech::after { content:''; position: absolute; bottom:-6px; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color: rgba(255,255,255,0.28); border-bottom:none; }
+  /* ARTICULACIONES ESTILO BLOQUES (MINECRAFT) */
+  .mc-leg-l { animation: mcLegL 0.6s ease-in-out infinite alternate; transform-origin: 52px 105px; }
+  .mc-leg-r { animation: mcLegR 0.6s ease-in-out infinite alternate; transform-origin: 78px 105px; }
+  .mc-arm-l { animation: mcArmL 0.6s ease-in-out infinite alternate; transform-origin: 34px 62px; }
+  .mc-arm-r { animation: mcArmR 0.6s ease-in-out infinite alternate; transform-origin: 96px 62px; }
 
-  .char-frame { width: 130px; height: 155px; border-radius: 14px; overflow: hidden; position: relative; border: 2.5px solid; background: transparent; }
-  .santi-frame { border-color: #44aaff; box-shadow: 0 0 18px rgba(68,170,255,0.5); }
-  .nico-frame  { border-color: #44dd88; box-shadow: 0 0 18px rgba(68,221,136,0.5); }
+  .char-wrap:nth-child(2) .mc-leg-l { animation-delay: 0.15s; }
+  .char-wrap:nth-child(2) .mc-leg-r { animation-delay: 0.15s; }
+  .char-wrap:nth-child(2) .mc-arm-l { animation-delay: 0.15s; }
+  .char-wrap:nth-child(2) .mc-arm-r { animation-delay: 0.15s; }
 
-  .char-label { margin-top: 7px; font-size: 13px; font-weight: 900; padding: 3px 14px; border-radius: 20px; letter-spacing: 1.5px; text-align: center; }
-  .santi-label { background: rgba(68,170,255,0.15); color: #88ccff; border: 1px solid rgba(68,170,255,0.5); }
-  .nico-label  { background: rgba(68,221,136,0.15); color: #88ffbb; border: 1px solid rgba(68,221,136,0.5); }
+  @keyframes mcLegL { from { transform: rotate(-8deg); } to { transform: rotate(12deg); } }
+  @keyframes mcLegR { from { transform: rotate(12deg); } to { transform: rotate(-8deg); } }
+  @keyframes mcArmL { from { transform: rotate(20deg); } to { transform: rotate(-35deg); } }
+  @keyframes mcArmR { from { transform: rotate(-35deg); } to { transform: rotate(20deg); } }
 
-  .date-badge { text-align: center; margin: 6px 0; position: relative; z-index: 2; }
-  .date-badge span { background: linear-gradient(90deg, rgba(85,102,255,0.25), rgba(160,100,255,0.25)); border: 1px solid rgba(160,100,255,0.45); color: #ccaaff; padding: 4px 22px; border-radius: 20px; font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+  .speech { position: absolute; top: -26px; background: rgba(0,0,0,0.6); border: 2px solid #ffffff; font-family: 'Press Start 2P', monospace; font-size: 8px; padding: 4px 8px; color: #fff; white-space: nowrap; z-index: 5; image-rendering: pixelated; }
+
+  .char-frame { width: 130px; height: 155px; border-radius: 4px; overflow: hidden; position: relative; border: 3px solid; background: transparent; }
+  .santi-frame { border-color: #44aaff; box-shadow: 0 0 15px rgba(68,170,255,0.4); }
+  .nico-frame  { border-color: #44dd88; box-shadow: 0 0 15px rgba(68,221,136,0.4); }
+
+  .char-label { margin-top: 7px; font-family: 'Press Start 2P', monospace; font-size: 10px; padding: 5px 10px; border-radius: 0; letter-spacing: 1px; text-align: center; border: 2px solid; }
+  .santi-label { background: #112060; color: #88ccff; border-color: #44aaff; }
+  .nico-label  { background: #051209; color: #88ffbb; border-color: #44dd88; }
+
+  .date-badge { text-align: center; margin: 12px 0; position: relative; z-index: 2; }
+  .date-badge span { background: linear-gradient(90deg, rgba(85,102,255,0.25), rgba(160,100,255,0.25)); border: 1px solid rgba(160,100,255,0.45); color: #ccaaff; padding: 6px 22px; border-radius: 20px; font-size: 13px; font-weight: 700; letter-spacing: 2px; }
 
   .msg-box { background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.13); border-radius: 14px; padding: 13px 15px; text-align: center; position: relative; z-index: 2; margin: 8px 0; }
   .msg-box p { color: #ccd4ff; font-size: 13px; line-height: 1.75; }
   .names-hl { font-size: 15px; font-weight: 900; background: linear-gradient(90deg, #44aaff, #44dd88); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-style: italic; }
 
   .info-section { display: flex; flex-direction: column; gap: 9px; position: relative; z-index: 2; margin-top: 8px; }
-  .info-card { display: flex; align-items: center; gap: 11px; background: rgba(85,102,255,0.1); border: 1px solid rgba(85,102,255,0.32); border-radius: 13px; padding: 11px 15px; }
+  .info-card { display: flex; align-items: center; gap: 11px; background: rgba(85,102,255,0.1); border: 1px solid rgba(85,102,255,0.32); border-radius: 13px; padding: 11px 15px; text-decoration: none; transition: background 0.2s; }
+  .info-card:hover { background: rgba(85,102,255,0.2); }
   .icon-wrap { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 19px; flex-shrink: 0; }
   .ic-loc    { background: rgba(255,100,100,0.18); border: 1.5px solid #ff6464; }
   .ic-phone { background: rgba(68,255,140,0.14); border: 1.5px solid #44ff8c; }
   .info-lbl  { font-size: 10px; color: #8899cc; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 2px; }
   .info-main { font-size: 15px; font-weight: 900; color: #eeeeff; line-height: 1.3; }
   .info-sub  { font-size: 13px; color: #aab4dd; font-weight: 700; }
+  .click-hint { font-size: 11px; color: #ff6464; font-weight: bold; text-decoration: underline; }
+
+  /* BOTÓN SMS DE CONFIRMACIÓN */
+  .sms-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(90deg, #44dd88, #22aa66); border: none; color: white; padding: 12px; border-radius: 13px; font-size: 14px; font-weight: 900; text-decoration: none; width: 100%; text-align: center; box-shadow: 0 4px 15px rgba(68,221,136,0.3); transition: transform 0.2s; margin-top: 4px; position: relative; z-index: 2; }
+  .sms-btn:active { transform: scale(0.98); }
 
   .web-link { display: block; text-align: center; margin: 12px 0 4px; font-size: 11px; color: #6688ff; text-decoration: none; word-break: break-all; opacity: 0.7; }
   .web-link:hover { text-decoration: underline; opacity: 1; }
@@ -165,122 +156,60 @@
   <div class="characters" id="charContainer">
 
     <div class="char-wrap" id="charSanti">
-      <div class="speech">Happy Birthday! 🎉</div>
+      <div class="speech">SANTI! 🎉</div>
       <div class="char-frame santi-frame">
-        <svg viewBox="0 0 130 155" xmlns="http://www.w3.org/2000/svg" width="130" height="155">
+        <svg viewBox="0 0 130 155" xmlns="http://www.w3.org/2000/svg" width="130" height="155" style="image-rendering:pixelated;">
           <defs>
             <linearGradient id="bgS" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1a40"/><stop offset="100%" stop-color="#112060"/></linearGradient>
-            <linearGradient id="skinS" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0b888"/><stop offset="100%" stop-color="#d8956a"/></linearGradient>
           </defs>
           <rect width="130" height="155" fill="url(#bgS)"/>
           
-          <g class="leg-l">
-            <rect x="46" y="115" width="10" height="24" fill="#aaaaaa"/>
-            <ellipse cx="48" cy="139" rx="8" ry="5" fill="#4455ee"/>
-          </g>
-          <g class="leg-r">
-            <rect x="74" y="115" width="10" height="24" fill="#aaaaaa"/>
-            <ellipse cx="76" cy="139" rx="8" ry="5" fill="#4455ee"/>
-          </g>
+          <rect class="mc-leg-l" x="44" y="105" width="14" height="30" fill="#3a55dd"/>
+          <rect class="mc-leg-r" x="72" y="105" width="14" height="30" fill="#3a55dd"/>
 
-          <path class="arm-l" d="M42 102 Q20 110 25 125" stroke="#aaaaaa" stroke-width="10" stroke-linecap="round" fill="none"/>
-          <path class="arm-r" d="M88 102 Q110 110 105 125" stroke="#aaaaaa" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <rect class="mc-arm-l" x="22" y="60" width="14" height="32" fill="#55aaff"/>
+          <rect class="mc-arm-r" x="94" y="60" width="14" height="32" fill="#55aaff"/>
 
-          <path d="M45 100 Q65 110 85 100 L90 120 Q65 135 40 120 Z" fill="#aaaaaa"/>
-          <rect x="28" y="105" width="44" height="22" rx="4" fill="#959595" opacity="0.4"/>
-          <rect x="55" y="85" width="20" height="20" rx="6" fill="url(#skinS)"/>
-          <ellipse cx="65" cy="64" rx="32" ry="34" fill="url(#skinS)"/>
-          <path d="M33 58 C33 32, 42 18, 65 16 C88 18, 97 32, 97 58 C94 46, 86 34, 65 32 C44 34, 36 46, 33 58Z" fill="#1a1008"/>
-          <path d="M33 58 C30 65, 31 74, 35 78 L38 72 C34 66, 34 60, 36 56Z" fill="#1a1008"/>
-          <path d="M97 58 C100 65, 99 74, 95 78 L92 72 C96 66, 96 60, 94 56Z" fill="#1a1008"/>
-          <path d="M55 20 C53 10, 57 6, 60 16Z" fill="#221508"/>
-          <path d="M65 17 C65 7, 69 5, 70 16Z" fill="#221508"/>
-          <path d="M74 20 C76 10, 80 8, 78 18Z" fill="#221508"/>
-          <path d="M48 28 C54 22, 62 20, 70 22" stroke="#3a2a10" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
-          <path d="M44 48 Q52 45 58 47" stroke="#1a1008" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <path d="M72 47 Q78 45 86 48" stroke="#1a1008" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <ellipse cx="51" cy="56" rx="9" ry="10" fill="white"/>
-          <ellipse cx="79" cy="56" rx="9" ry="10" fill="white"/>
-          <ellipse cx="51" cy="57" rx="6.5" ry="7.5" fill="#3a1a00"/>
-          <ellipse cx="79" cy="57" rx="6.5" ry="7.5" fill="#3a1a00"/>
-          <ellipse cx="50" cy="56" rx="3" ry="4" fill="#0a0500"/>
-          <ellipse cx="78" cy="56" rx="3" ry="4" fill="#0a0500"/>
-          <circle cx="54" cy="53" r="2" fill="white"/>
-          <circle cx="82" cy="53" r="2" fill="white"/>
-          <path d="M42 52 Q51 48 60 52" stroke="#1a0800" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M70 52 Q79 48 88 52" stroke="#1a0800" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M62 66 Q65 70 68 66" stroke="#c07050" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-          <path d="M52 78 Q65 88 78 78" stroke="#b06040" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <path d="M55 80 Q65 86 75 80 Q75 83 65 83 Q55 83 55 80Z" fill="white" opacity="0.8"/>
-          <ellipse cx="41" cy="66" rx="7" ry="4" fill="#ff9977" opacity="0.35"/>
-          <ellipse cx="89" cy="66" rx="7" ry="4" fill="#ff9977" opacity="0.35"/>
-          
-          <ellipse cx="65" cy="70" rx="60" ry="70" fill="none" stroke="#44aaff" stroke-width="1" opacity="0.25"/>
-          <text x="14" y="40" fill="#44aaff" font-size="12" opacity="0.8">✦</text>
-          <text x="106" y="34" fill="#88ddff" font-size="10" opacity="0.7">★</text>
+          <rect x="36" y="60" width="58" height="48" fill="#4488ff"/>
+          <rect x="50" y="70" width="30" height="25" fill="#2255cc" opacity="0.4"/> <rect x="41" y="18" width="48" height="42" fill="#f0b888"/>
+          <rect x="41" y="18" width="48" height="12" fill="#1a1008"/>
+          <rect x="41" y="30" width="8" height="10" fill="#1a1008"/>
+          <rect x="81" y="30" width="8" height="10" fill="#1a1008"/>
+          <rect x="47" y="36" width="8" height="5" fill="#ffffff"/>
+          <rect x="49" y="36" width="4" height="5" fill="#3a1a00"/>
+          <rect x="75" y="36" width="8" height="5" fill="#ffffff"/>
+          <rect x="77" y="36" width="4" height="5" fill="#3a1a00"/>
+          <rect x="57" y="48" width="16" height="4" fill="#a04030"/>
         </svg>
       </div>
       <div class="char-label santi-label">SANTIAGO</div>
     </div>
 
     <div class="char-wrap" id="charNico">
-      <div class="speech">Let's celebrate! 🎂</div>
+      <div class="speech">NICO! 🎂</div>
       <div class="char-frame nico-frame">
-        <svg viewBox="0 0 130 155" xmlns="http://www.w3.org/2000/svg" width="130" height="155">
+        <svg viewBox="0 0 130 155" xmlns="http://www.w3.org/2000/svg" width="130" height="155" style="image-rendering:pixelated;">
           <defs>
             <linearGradient id="bgN" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1e14"/><stop offset="100%" stop-color="#051209"/></linearGradient>
-            <linearGradient id="skinN" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8a870"/><stop offset="100%" stop-color="#c87848"/></linearGradient>
           </defs>
           <rect width="130" height="155" fill="url(#bgN)"/>
           
-          <g class="leg-l">
-            <rect x="46" y="115" width="10" height="24" fill="#1a1a1a"/>
-            <ellipse cx="48" cy="139" rx="8" ry="5" fill="#44dd88"/>
-          </g>
-          <g class="leg-r">
-            <rect x="74" y="115" width="10" height="24" fill="#1a1a1a"/>
-            <ellipse cx="76" cy="139" rx="8" ry="5" fill="#44dd88"/>
-          </g>
+          <rect class="mc-leg-l" x="44" y="105" width="14" height="30" fill="#227744"/>
+          <rect class="mc-leg-r" x="72" y="105" width="14" height="30" fill="#227744"/>
 
-          <path class="arm-l" d="M42 102 Q20 110 25 125" stroke="#1a1a1a" stroke-width="10" stroke-linecap="round" fill="none"/>
-          <path class="arm-r" d="M88 102 Q110 110 105 125" stroke="#1a1a1a" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <rect class="mc-arm-l" x="22" y="60" width="14" height="32" fill="#222222"/>
+          <rect class="mc-arm-r" x="94" y="60" width="14" height="32" fill="#222222"/>
 
-          <path d="M45 100 Q65 108 85 100 L90 120 Q65 133 40 120 Z" fill="#1a1a1a"/>
-          <polygon points="65,102 72,106 72,114 65,118 58,114 58,106" fill="#333333" stroke="#44dd88" stroke-width="1"/>
-          <text x="65" y="112" text-anchor="middle" fill="#44dd88" font-size="5" font-weight="bold">ROBOTICS</text>
-          <rect x="55" y="85" width="20" height="20" rx="6" fill="url(#skinN)"/>
-          <ellipse cx="65" cy="63" rx="30" ry="33" fill="url(#skinN)"/>
-          <path d="M35 57 C35 30, 44 16, 65 14 C86 16, 95 30, 95 57 C92 44, 84 32, 65 30 C46 32, 38 44, 35 57Z" fill="#120c04"/>
-          <path d="M35 57 C32 65, 33 75, 37 80 L40 73 C36 66, 36 60, 38 55Z" fill="#120c04"/>
-          <path d="M95 57 C98 65, 97 75, 93 80 L90 73 C94 66, 94 60, 92 55Z" fill="#120c04"/>
-          <path d="M50 20 C46 6, 52 2, 56 16Z" fill="#1a1005"/>
-          <path d="M60 16 C58 4, 64 2, 65 15Z" fill="#1a1005"/>
-          <path d="M70 16 C72 4, 78 6, 74 18Z" fill="#1a1005"/>
-          <path d="M78 20 C82 8, 87 10, 82 32Z" fill="#1a1005"/>
-          <path d="M88 25 C94 16, 100 18, 96 30Z" fill="#120c04"/>
-          <path d="M46 26 C54 20, 63 18, 72 20" stroke="#2a1a08" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
-          <path d="M44 47 Q52 44 58 46" stroke="#120c04" stroke-width="2.3" fill="none" stroke-linecap="round"/>
-          <path d="M72 46 Q78 44 86 47" stroke="#120c04" stroke-width="2.3" fill="none" stroke-linecap="round"/>
-          <ellipse cx="51" cy="55" rx="8.5" ry="9.5" fill="white"/>
-          <ellipse cx="79" cy="55" rx="8.5" ry="9.5" fill="white"/>
-          <ellipse cx="51" cy="56" rx="6" ry="7" fill="#2a1000"/>
-          <ellipse cx="79" cy="56" rx="6" ry="7" fill="#2a1000"/>
-          <ellipse cx="50" cy="55" rx="2.8" ry="3.5" fill="#050200"/>
-          <ellipse cx="78" cy="55" rx="2.8" ry="3.5" fill="#050200"/>
-          <circle cx="54" cy="52" r="1.8" fill="white"/>
-          <circle cx="82" cy="52" r="1.8" fill="white"/>
-          <path d="M42 51 Q51 47 60 51" stroke="#120c04" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M70 51 Q79 47 88 51" stroke="#120c04" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M62 65 Q65 69 68 65" stroke="#b06848" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-          <path d="M52 77 Q65 88 78 77" stroke="#a05838" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <path d="M54 79 Q65 87 76 79 Q76 83 65 83 Q54 83 54 79Z" fill="white" opacity="0.8"/>
-          <ellipse cx="40" cy="64" rx="7" ry="4" fill="#ff8855" opacity="0.3"/>
-          <ellipse cx="90" cy="64" rx="7" ry="4" fill="#ff8855" opacity="0.3"/>
-          
-          <ellipse cx="65" cy="68" rx="58" ry="68" fill="none" stroke="#44dd88" stroke-width="1" opacity="0.22"/>
-          <text x="12" y="38" fill="#44dd88" font-size="12" opacity="0.8">✦</text>
-          <text x="108" y="32" fill="#88ffbb" font-size="10" opacity="0.7">★</text>
-          <text x="110" y="105" fill="#44dd88" font-size="8" opacity="0.6">✦</text>
+          <rect x="36" y="60" width="58" height="48" fill="#151515"/>
+          <rect x="48" y="72" width="34" height="20" fill="#333333"/> <rect x="41" y="18" width="48" height="42" fill="#e8a870"/>
+          <rect x="41" y="18" width="48" height="14" fill="#251505"/>
+          <rect x="41" y="32" width="6" height="8" fill="#251505"/>
+          <rect x="83" y="32" width="6" height="8" fill="#251505"/>
+          <rect x="47" y="36" width="8" height="5" fill="#ffffff"/>
+          <rect x="49" y="36" width="4" height="5" fill="#2a1000"/>
+          <rect x="75" y="36" width="8" height="5" fill="#ffffff"/>
+          <rect x="77" y="36" width="4" height="5" fill="#2a1000"/>
+          <rect x="57" y="48" width="16" height="4" fill="#903828"/>
         </svg>
       </div>
       <div class="char-label nico-label">NICO</div>
@@ -299,22 +228,28 @@
   </div>
 
   <div class="info-section">
-    <div class="info-card">
+    <a class="info-card" href="https://maps.google.com/?q=12901+Moss+Park+Rd,+Orlando,+FL+32832" target="_blank">
       <div class="icon-wrap ic-loc">📍</div>
       <div>
         <div class="info-lbl">Let's meet at</div>
         <div class="info-main">Moss Park</div>
-        <div class="info-sub">🕓 4:00 PM</div>
+        <div class="info-sub">12901 Moss Park Rd, 32832</div>
+        <span class="click-hint">Click to open Map 🗺️</span>
       </div>
-    </div>
+    </a>
+
     <div class="info-card">
       <div class="icon-wrap ic-phone">📞</div>
       <div>
-        <div class="info-lbl">Call or Text to confirm</div>
+        <div class="info-lbl">Host Contact</div>
         <div class="info-main">Carolina Perdomo</div>
         <div class="info-sub">407-489-8563</div>
       </div>
     </div>
+
+    <a class="sms-btn" href="sms:4074898563?body=¡Hola Carolina! Confirmo mi asistencia al cumpleaños de Nico y Santi. ¡Allí estaré!">
+      💬 Click here to Confirm via SMS
+    </a>
   </div>
 
   <a class="web-link" href="https://jahebach.github.io/NICOSANTIHAPPYBIRTHDAY/" target="_blank">https://jahebach.github.io/NICOSANTIHAPPYBIRTHDAY/</a>
@@ -334,39 +269,33 @@
     if (inviteOpened) return;
     inviteOpened = true;
 
-    // Cuenta regresiva de 45 segundos para que salten por la pantalla
+    // Cuenta regresiva de 45 segundos para que vuelen libremente
     setTimeout(() => {
       makeCharactersRoam();
     }, 45000); 
   }
 
-  // Lógica para que los muñecos reboten por toda la pantalla
   function makeCharactersRoam() {
     const chars = [document.getElementById('charSanti'), document.getElementById('charNico')];
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
 
     chars.forEach((char, index) => {
       if(!char) return;
       
-      // Obtenemos su posición actual antes de desprenderlos
       const rect = char.getBoundingClientRect();
       
       char.classList.add('roaming');
       char.style.left = `${rect.left}px`;
       char.style.top = `${rect.top}px`;
 
-      // Direcciones y velocidades cruzadas (uno a la izquierda, otro a la derecha, arriba/abajo)
       let posX = rect.left;
       let posY = rect.top;
-      let velX = index === 0 ? 3 : -3; // Santiago derecha, Nico izquierda
-      let velY = index === 0 ? -2.5 : 2.5; // Santiago arriba, Nico abajo
+      let velX = index === 0 ? 3.5 : -3.5; 
+      let velY = index === 0 ? -2.5 : 2.5; 
 
       function bounceAnimation() {
         posX += velX;
         posY += velY;
 
-        // Límites de rebote en los bordes de la pantalla
         if (posX <= 0 || posX >= (window.innerWidth - 140)) velX *= -1;
         if (posY <= 0 || posY >= (window.innerHeight - 200)) velY *= -1;
 
@@ -383,7 +312,7 @@
   document.addEventListener('click', function() {
     const audio = document.getElementById('bgMusic');
     audio.play().catch(function(error) {
-      console.log("La reproducción automática fue bloqueada inicialmente:", error);
+      console.log("Audio block bypass:", error);
     });
     startRoamingCountdown();
   }, { once: true });
@@ -391,7 +320,7 @@
   document.addEventListener('touchstart', function() {
     const audio = document.getElementById('bgMusic');
     audio.play().catch(function(error) {
-      console.log("La reproducción automática fue bloqueada inicialmente:", error);
+      console.log("Audio block bypass:", error);
     });
     startRoamingCountdown();
   }, { once: true });
