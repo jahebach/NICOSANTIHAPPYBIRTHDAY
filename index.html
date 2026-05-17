@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #08081a; display: flex; justify-content: center; align-items: center; font-family: 'Nunito', sans-serif; padding: 20px 8px; min-height: 100vh; background-attachment: fixed; }
+  body { background: #08081a; display: flex; justify-content: center; align-items: center; font-family: 'Nunito', sans-serif; padding: 20px 8px; min-height: 100vh; background-attachment: fixed; overflow-x: hidden; }
 
   .card {
     width: 100%;
@@ -55,10 +55,18 @@
   .star-row { text-align: center; color: #ffdd00; font-size: 13px; letter-spacing: 5px; margin: 3px 0 8px; z-index: 2; position: relative; animation: pulse 2.2s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
 
-  .characters { display: flex; justify-content: center; gap: 14px; margin: 4px 0 6px; position: relative; z-index: 2; }
-  .char-wrap { display: flex; flex-direction: column; align-items: center; position: relative; }
+  .characters { display: flex; justify-content: center; gap: 14px; margin: 4px 0 6px; position: relative; z-index: 2; min-height: 220px; }
+  .char-wrap { display: flex; flex-direction: column; align-items: center; position: relative; transition: all 0.5s ease-in-out; }
   
-  /* NUEVAS ANIMACIONES DE BAILE */
+  /* ESTILOS CUANDO SE SUELTAN POR LA PANTALLA (A LOS 45s) */
+  .char-wrap.roaming {
+    position: fixed !important;
+    z-index: 9999 !important;
+    pointer-events: none;
+    width: 140px;
+  }
+
+  /* ANIMACIONES BASE DE BAILE EN SU SITIO */
   .char-wrap:nth-child(1) { animation: danceSanti 1s ease-in-out infinite; }
   .char-wrap:nth-child(2) { animation: danceNico 1.1s ease-in-out infinite; animation-delay: 0.15s; }
 
@@ -71,30 +79,42 @@
     50% { transform: translateY(-12px) rotate(-4deg); }
   }
 
-  /* EFECTO DE ANIMACIÓN PARA LAS PIERNAS DENTRO DEL SVG */
+  /* ANIMACIÓN DE EXTREMIDADES (BRAZOS Y PIERNAS) */
   .leg-l { animation: danceLegL 1s ease-in-out infinite; transform-origin: 50px 115px; }
   .leg-r { animation: danceLegR 1s ease-in-out infinite; transform-origin: 80px 115px; }
+  .arm-l { animation: danceArmL 1s ease-in-out infinite; transform-origin: 40px 105px; }
+  .arm-r { animation: danceArmR 1s ease-in-out infinite; transform-origin: 90px 105px; }
   
-  .char-wrap:nth-child(2) .leg-l { animation: danceLegL 1.1s ease-in-out infinite; animation-delay: 0.15s; transform-origin: 50px 115px; }
-  .char-wrap:nth-child(2) .leg-r { animation: danceLegR 1.1s ease-in-out infinite; animation-delay: 0.15s; transform-origin: 80px 115px; }
+  .char-wrap:nth-child(2) .leg-l { animation: danceLegL 1.1s ease-in-out infinite; animation-delay: 0.15s; }
+  .char-wrap:nth-child(2) .leg-r { animation: danceLegR 1.1s ease-in-out infinite; animation-delay: 0.15s; }
+  .char-wrap:nth-child(2) .arm-l { animation: danceArmL 1.1s ease-in-out infinite; animation-delay: 0.15s; }
+  .char-wrap:nth-child(2) .arm-r { animation: danceArmR 1.1s ease-in-out infinite; animation-delay: 0.15s; }
 
   @keyframes danceLegL {
     0%, 100% { transform: scaleY(1); }
-    50% { transform: scaleY(0.75) skewX(8deg); }
+    50% { transform: scaleY(0.7) skewX(10deg); }
   }
   @keyframes danceLegR {
-    0%, 100% { transform: scaleY(0.75) skewX(-8deg); }
+    0%, 100% { transform: scaleY(0.7) skewX(-10deg); }
     50% { transform: scaleY(1); }
   }
+  @keyframes danceArmL {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-45deg) translateY(-5px); }
+  }
+  @keyframes danceArmR {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(45deg) translateY(-5px); }
+  }
 
-  .speech { position: absolute; top: -26px; background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.28); border-radius: 10px; padding: 3px 9px; font-size: 11px; color: #fff; white-space: nowrap; }
+  .speech { position: absolute; top: -26px; background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.28); border-radius: 10px; padding: 3px 9px; font-size: 11px; color: #fff; white-space: nowrap; z-index: 5; }
   .speech::after { content:''; position: absolute; bottom:-6px; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color: rgba(255,255,255,0.28); border-bottom:none; }
 
-  .char-frame { width: 130px; height: 155px; border-radius: 14px; overflow: hidden; position: relative; border: 2.5px solid; }
+  .char-frame { width: 130px; height: 155px; border-radius: 14px; overflow: hidden; position: relative; border: 2.5px solid; background: transparent; }
   .santi-frame { border-color: #44aaff; box-shadow: 0 0 18px rgba(68,170,255,0.5); }
   .nico-frame  { border-color: #44dd88; box-shadow: 0 0 18px rgba(68,221,136,0.5); }
 
-  .char-label { margin-top: 7px; font-size: 13px; font-weight: 900; padding: 3px 14px; border-radius: 20px; letter-spacing: 1.5px; }
+  .char-label { margin-top: 7px; font-size: 13px; font-weight: 900; padding: 3px 14px; border-radius: 20px; letter-spacing: 1.5px; text-align: center; }
   .santi-label { background: rgba(68,170,255,0.15); color: #88ccff; border: 1px solid rgba(68,170,255,0.5); }
   .nico-label  { background: rgba(68,221,136,0.15); color: #88ffbb; border: 1px solid rgba(68,221,136,0.5); }
 
@@ -142,9 +162,9 @@
 
   <div class="star-row">★ ★ ★ ★ ★ ★ ★ ★</div>
 
-  <div class="characters">
+  <div class="characters" id="charContainer">
 
-    <div class="char-wrap">
+    <div class="char-wrap" id="charSanti">
       <div class="speech">Happy Birthday! 🎉</div>
       <div class="char-frame santi-frame">
         <svg viewBox="0 0 130 155" xmlns="http://www.w3.org/2000/svg" width="130" height="155">
@@ -162,6 +182,9 @@
             <rect x="74" y="115" width="10" height="24" fill="#aaaaaa"/>
             <ellipse cx="76" cy="139" rx="8" ry="5" fill="#4455ee"/>
           </g>
+
+          <path class="arm-l" d="M42 102 Q20 110 25 125" stroke="#aaaaaa" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <path class="arm-r" d="M88 102 Q110 110 105 125" stroke="#aaaaaa" stroke-width="10" stroke-linecap="round" fill="none"/>
 
           <path d="M45 100 Q65 110 85 100 L90 120 Q65 135 40 120 Z" fill="#aaaaaa"/>
           <rect x="28" y="105" width="44" height="22" rx="4" fill="#959595" opacity="0.4"/>
@@ -200,7 +223,7 @@
       <div class="char-label santi-label">SANTIAGO</div>
     </div>
 
-    <div class="char-wrap">
+    <div class="char-wrap" id="charNico">
       <div class="speech">Let's celebrate! 🎂</div>
       <div class="char-frame nico-frame">
         <svg viewBox="0 0 130 155" xmlns="http://www.w3.org/2000/svg" width="130" height="155">
@@ -218,6 +241,9 @@
             <rect x="74" y="115" width="10" height="24" fill="#1a1a1a"/>
             <ellipse cx="76" cy="139" rx="8" ry="5" fill="#44dd88"/>
           </g>
+
+          <path class="arm-l" d="M42 102 Q20 110 25 125" stroke="#1a1a1a" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <path class="arm-r" d="M88 102 Q110 110 105 125" stroke="#1a1a1a" stroke-width="10" stroke-linecap="round" fill="none"/>
 
           <path d="M45 100 Q65 108 85 100 L90 120 Q65 133 40 120 Z" fill="#1a1a1a"/>
           <polygon points="65,102 72,106 72,114 65,118 58,114 58,106" fill="#333333" stroke="#44dd88" stroke-width="1"/>
@@ -302,11 +328,64 @@
 </div>
 
 <script>
+  let inviteOpened = false;
+
+  function startRoamingCountdown() {
+    if (inviteOpened) return;
+    inviteOpened = true;
+
+    // Cuenta regresiva de 45 segundos para que salten por la pantalla
+    setTimeout(() => {
+      makeCharactersRoam();
+    }, 45000); 
+  }
+
+  // Lógica para que los muñecos reboten por toda la pantalla
+  function makeCharactersRoam() {
+    const chars = [document.getElementById('charSanti'), document.getElementById('charNico')];
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    chars.forEach((char, index) => {
+      if(!char) return;
+      
+      // Obtenemos su posición actual antes de desprenderlos
+      const rect = char.getBoundingClientRect();
+      
+      char.classList.add('roaming');
+      char.style.left = `${rect.left}px`;
+      char.style.top = `${rect.top}px`;
+
+      // Direcciones y velocidades cruzadas (uno a la izquierda, otro a la derecha, arriba/abajo)
+      let posX = rect.left;
+      let posY = rect.top;
+      let velX = index === 0 ? 3 : -3; // Santiago derecha, Nico izquierda
+      let velY = index === 0 ? -2.5 : 2.5; // Santiago arriba, Nico abajo
+
+      function bounceAnimation() {
+        posX += velX;
+        posY += velY;
+
+        // Límites de rebote en los bordes de la pantalla
+        if (posX <= 0 || posX >= (window.innerWidth - 140)) velX *= -1;
+        if (posY <= 0 || posY >= (window.innerHeight - 200)) velY *= -1;
+
+        char.style.left = `${posX}px`;
+        char.style.top = `${posY}px`;
+
+        requestAnimationFrame(bounceAnimation);
+      }
+      
+      requestAnimationFrame(bounceAnimation);
+    });
+  }
+
   document.addEventListener('click', function() {
     const audio = document.getElementById('bgMusic');
     audio.play().catch(function(error) {
       console.log("La reproducción automática fue bloqueada inicialmente:", error);
     });
+    startRoamingCountdown();
   }, { once: true });
 
   document.addEventListener('touchstart', function() {
@@ -314,6 +393,7 @@
     audio.play().catch(function(error) {
       console.log("La reproducción automática fue bloqueada inicialmente:", error);
     });
+    startRoamingCountdown();
   }, { once: true });
 
   const sEl = document.getElementById('starsEl');
