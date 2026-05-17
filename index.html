@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #08081a; display: flex; justify-content: center; align-items: center; font-family: 'Nunito', sans-serif; padding: 20px 8px; min-height: 100vh; background-attachment: fixed; }
+  body { background: #08081a; display: flex; justify-content: center; align-items: center; font-family: 'Nunito', sans-serif; padding: 20px 8px; min-height: 100vh; background-attachment: fixed; overflow-x: hidden; }
 
   .card {
     width: 100%;
@@ -19,6 +19,7 @@
     border: 2px solid #4455ee;
     box-shadow: 0 0 50px rgba(70,90,255,0.45), inset 0 0 80px rgba(70,90,255,0.08);
     padding: 22px 18px 26px;
+    z-index: 1;
   }
 
   .stars-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
@@ -55,51 +56,173 @@
   .star-row { text-align: center; color: #ffdd00; font-size: 13px; letter-spacing: 5px; margin: 3px 0 8px; z-index: 2; position: relative; animation: pulse 2.2s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
 
-  .characters { display: flex; justify-content: center; gap: 14px; margin: 4px 0 6px; position: relative; z-index: 2; }
-  .char-wrap { display: flex; flex-direction: column; align-items: center; position: relative; }
-  
-  /* NUEVAS ANIMACIONES: ¡AHORA BAILAN Y SE MUEVEN MUCHO! */
-  .char-wrap:nth-child(1) { animation: danceSanti 1.2s ease-in-out infinite; }
-  .char-wrap:nth-child(2) { animation: danceNico 1.4s ease-in-out infinite; animation-delay: 0.2s; }
+  /* --- NUEVA ESCENA DE BAILE DE CUERPO COMPLETO --- */
+  .dance-scene {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    margin: 10px 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: visible;
+  }
 
+  .dance-floor {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 30px;
+    background: rgba(85, 102, 255, 0.2);
+    border-radius: 50%;
+    border: 2px solid rgba(85, 102, 255, 0.6);
+    box-shadow: 0 0 30px rgba(85, 102, 255, 0.6), inset 0 0 15px rgba(85, 102, 255, 0.3);
+    animation: floorPulse 2s infinite alternate;
+  }
+  @keyframes floorPulse {
+    from { box-shadow: 0 0 20px rgba(85, 102, 255, 0.5); transform: translateX(-50%) scale(1); }
+    to { box-shadow: 0 0 40px rgba(85, 102, 255, 0.9); transform: translateX(-50%) scale(1.05); }
+  }
+
+  .char-body {
+    width: 140px;
+    height: 220px;
+    position: relative;
+    transform-origin: bottom center;
+  }
+
+  /* Animación de baile para Santiago: más saltos y giros */
+  .santi-body { animation: danceSanti 1s ease-in-out infinite; margin-right: -10px; }
   @keyframes danceSanti {
-    0%, 100% { transform: translateY(0) scale(1) rotate(-4deg); }
-    50% { transform: translateY(-16px) scale(1.05) rotate(5deg); }
+    0%, 100% { transform: translateY(0) rotate(-5deg) scaleY(1); }
+    25% { transform: translateY(-30px) rotate(8deg) scaleY(1.05); }
+    50% { transform: translateY(-15px) rotate(-10deg) scaleY(0.95); }
+    75% { transform: translateY(-35px) rotate(5deg) scaleY(1.05); }
   }
+
+  /* Animación de baile para Nico: más energía y movimiento lateral */
+  .nico-body { animation: danceNico 1.1s ease-in-out infinite; animation-delay: 0.1s; margin-left: -10px; }
   @keyframes danceNico {
-    0%, 100% { transform: translateY(0) scale(1) rotate(4deg); }
-    50% { transform: translateY(-18px) scale(1.05) rotate(-5deg); }
+    0%, 100% { transform: translateY(0) rotate(5deg) scaleY(1); }
+    25% { transform: translateY(-35px) rotate(-8deg) scaleY(1.05); }
+    50% { transform: translateY(-20px) rotate(10deg) scaleY(0.95); }
+    75% { transform: translateY(-40px) rotate(-5deg) scaleY(1.05); }
   }
 
-  .speech { position: absolute; top: -26px; background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.28); border-radius: 10px; padding: 3px 9px; font-size: 11px; color: #fff; white-space: nowrap; }
-  .speech::after { content:''; position: absolute; bottom:-6px; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color: rgba(255,255,255,0.28); border-bottom:none; }
+  .speech-bubble {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    animation: speechFade 4s infinite;
+  }
+  .santi-body .speech-bubble { animation-delay: 0.5s; }
+  .nico-body .speech-bubble { animation-delay: 2.5s; }
 
-  .char-frame { width: 130px; height: 155px; border-radius: 14px; overflow: hidden; position: relative; border: 2.5px solid; }
-  .santi-frame { border-color: #44aaff; box-shadow: 0 0 18px rgba(68,170,255,0.5); }
-  .nico-frame  { border-color: #44dd88; box-shadow: 0 0 18px rgba(68,221,136,0.5); }
+  @keyframes speechFade {
+    0%, 10%, 40%, 100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    15%, 35% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
 
-  .char-label { margin-top: 7px; font-size: 13px; font-weight: 900; padding: 3px 14px; border-radius: 20px; letter-spacing: 1.5px; }
-  .santi-label { background: rgba(68,170,255,0.15); color: #88ccff; border: 1px solid rgba(68,170,255,0.5); }
-  .nico-label  { background: rgba(68,221,136,0.15); color: #88ffbb; border: 1px solid rgba(68,221,136,0.5); }
+  .char-label-body {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    font-weight: 900;
+    padding: 3px 14px;
+    border-radius: 20px;
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+  }
+  .santi-label-body { background: rgba(68,170,255,0.15); color: #88ccff; border: 1px solid rgba(68,170,255,0.5); }
+  .nico-label-body  { background: rgba(68,221,136,0.15); color: #88ffbb; border: 1px solid rgba(68,221,136,0.5); }
 
-  .date-badge { text-align: center; margin: 6px 0; position: relative; z-index: 2; }
+  /* --- FIN ESCENA DE BAILE --- */
+
+  .date-badge { text-align: center; margin: 15px 0 10px; position: relative; z-index: 2; }
   .date-badge span { background: linear-gradient(90deg, rgba(85,102,255,0.25), rgba(160,100,255,0.25)); border: 1px solid rgba(160,100,255,0.45); color: #ccaaff; padding: 4px 22px; border-radius: 20px; font-size: 13px; font-weight: 700; letter-spacing: 2px; }
 
-  .msg-box { background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.13); border-radius: 14px; padding: 13px 15px; text-align: center; position: relative; z-index: 2; margin: 8px 0; }
+  .msg-box { background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.13); border-radius: 14px; padding: 13px 15px; text-align: center; position: relative; z-index: 2; margin: 8px 0 15px; }
   .msg-box p { color: #ccd4ff; font-size: 13px; line-height: 1.75; }
   .names-hl { font-size: 15px; font-weight: 900; background: linear-gradient(90deg, #44aaff, #44dd88); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-style: italic; }
 
-  .info-section { display: flex; flex-direction: column; gap: 9px; position: relative; z-index: 2; margin-top: 8px; }
-  .info-card { display: flex; align-items: center; gap: 11px; background: rgba(85,102,255,0.1); border: 1px solid rgba(85,102,255,0.32); border-radius: 13px; padding: 11px 15px; }
-  .icon-wrap { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 19px; flex-shrink: 0; }
-  .ic-loc   { background: rgba(255,100,100,0.18); border: 1.5px solid #ff6464; }
-  .ic-phone { background: rgba(68,255,140,0.14); border: 1.5px solid #44ff8c; }
-  .info-lbl  { font-size: 10px; color: #8899cc; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 2px; }
-  .info-main { font-size: 15px; font-weight: 900; color: #eeeeff; line-height: 1.3; }
-  .info-sub  { font-size: 13px; color: #aab4dd; font-weight: 700; }
+  .info-section { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 2; margin-top: 8px; }
+  
+  /* Tarjeta de ubicación estándar */
+  .location-card { display: flex; align-items: center; gap: 11px; background: rgba(85,102,255,0.1); border: 1px solid rgba(85,102,255,0.32); border-radius: 13px; padding: 11px 15px; }
+  
+  /* --- NUEVA TARJETA DE CONFIRMACIÓN COMO CARTA/SMS --- */
+  .confirmation-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #fff8e1; /* Color papel carta */
+    border: 2px solid #bcaaa4;
+    border-radius: 14px;
+    padding: 15px;
+    position: relative;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+    overflow: visible;
+  }
+  
+  /* Sello postal animado */
+  .stamp {
+    position: absolute;
+    top: -15px;
+    right: -10px;
+    width: 45px;
+    height: 45px;
+    background: #ff5252;
+    border-radius: 5px;
+    border: 3px dashed #fff;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    transform: rotate(15deg);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    animation: stampPulse 2s infinite alternate;
+  }
+  @keyframes stampPulse { from { transform: rotate(15deg) scale(1); } to { transform: rotate(10deg) scale(1.1); } }
+  
+  .conf-header { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+  .conf-title { font-size: 12px; color: #795548; text-transform: uppercase; letter-spacing: 2px; font-weight: 900; }
+  .conf-msg { font-size: 14px; color: #3e2723; line-height: 1.4; font-weight: 700; }
+  .conf-contact { font-size: 16px; font-weight: 900; color: #d84315; margin-top: 2px; }
+  
+  /* Enlace del teléfono para SMS */
+  .sms-link {
+    color: #d84315;
+    text-decoration: none;
+    border-bottom: 2px solid rgba(216,67,21,0.3);
+    transition: all 0.2s;
+  }
+  .sms-link:hover { color: #ff5722; border-bottom-color: rgba(216,67,21,0.8); }
 
-  /* Estilo del enlace web */
-  .web-link { display: block; text-align: center; margin: 12px 0 4px; font-size: 11px; color: #6688ff; text-decoration: none; word-break: break-all; opacity: 0.7; }
+  .icon-wrap-body { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 19px; flex-shrink: 0; }
+  .ic-loc-body   { background: rgba(255,100,100,0.18); border: 1.5px solid #ff6464; }
+  .ic-phone-body { background: rgba(68,255,140,0.14); border: 1.5px solid #44ff8c; }
+  
+  .info-lbl-body  { font-size: 10px; color: #8899cc; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 2px; }
+  .info-main-body { font-size: 15px; font-weight: 900; color: #eeeeff; line-height: 1.3; }
+  .info-sub-body  { font-size: 13px; color: #aab4dd; font-weight: 700; }
+
+  .web-link { display: block; text-align: center; margin: 15px 0 4px; font-size: 11px; color: #6688ff; text-decoration: none; word-break: break-all; opacity: 0.7; }
   .web-link:hover { text-decoration: underline; opacity: 1; }
 
   .capsule-note { background: rgba(255,200,0,0.07); border: 1px dashed rgba(255,200,0,0.38); border-radius: 11px; padding: 10px 14px; text-align: center; color: #ffcc88; font-size: 12.5px; position: relative; z-index: 2; margin-top: 9px; line-height: 1.6; }
@@ -127,22 +250,29 @@
 
   <div class="star-row">★ ★ ★ ★ ★ ★ ★ ★</div>
 
-  <div class="characters">
+  <div class="dance-scene">
+    <div class="dance-floor"></div>
 
-    <div class="char-wrap">
-      <div class="speech">Happy Birthday! 🎉</div>
-      <div class="char-frame santi-frame">
-        <svg viewBox="0 0 130 155" xmlns="http://www.w3.org/2000/svg" width="130" height="155">
-          <defs>
-            <linearGradient id="bgS" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1a40"/><stop offset="100%" stop-color="#112060"/></linearGradient>
-            <linearGradient id="skinS" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0b888"/><stop offset="100%" stop-color="#d8956a"/></linearGradient>
-          </defs>
-          <rect width="130" height="155" fill="url(#bgS)"/>
+    <div class="char-body santi-body">
+      <div class="speech-bubble">Happy Birthday! 🎉</div>
+      <svg viewBox="0 0 140 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bgS_b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1a40"/><stop offset="100%" stop-color="#112060"/></linearGradient>
+          <linearGradient id="skinS_b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0b888"/><stop offset="100%" stop-color="#d8956a"/></linearGradient>
+        </defs>
+        <rect x="35" y="80" width="70" height="110" rx="15" fill="#4a148c" stroke="#44aaff" stroke-width="2"/> <rect x="45" y="150" width="50" height="40" rx="10" fill="#311b92"/> <path d="M35 100 Q10 80 20 60" stroke="#f0b888" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M105 100 Q130 120 120 140" stroke="#f0b888" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M50 180 Q40 200 55 215" stroke="#311b92" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="M90 180 Q100 205 85 218" stroke="#311b92" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <rect x="45" y="210" width="25" height="10" rx="3" fill="white"/>
+        <rect x="80" y="213" width="25" height="10" rx="3" fill="white"/>
+        <g transform="translate(10, 0) scale(0.9)">
+          <rect width="130" height="155" fill="none"/>
           <ellipse cx="65" cy="175" rx="55" ry="40" fill="#b0b0b0"/>
           <path d="M45 110 Q65 120 85 110 L90 130 Q65 145 40 130 Z" fill="#aaaaaa"/>
           <rect x="28" y="115" width="44" height="22" rx="4" fill="#959595" opacity="0.4"/>
-          <rect x="55" y="95" width="20" height="20" rx="6" fill="url(#skinS)"/>
-          <ellipse cx="65" cy="74" rx="32" ry="34" fill="url(#skinS)"/>
+          <rect x="55" y="95" width="20" height="20" rx="6" fill="url(#skinS_b)"/>
+          <ellipse cx="65" cy="74" rx="32" ry="34" fill="url(#skinS_b)"/>
           <path d="M33 68 C33 42, 42 28, 65 26 C88 28, 97 42, 97 68 C94 56, 86 44, 65 42 C44 44, 36 56, 33 68Z" fill="#1a1008"/>
           <path d="M33 68 C30 75, 31 84, 35 88 L38 82 C34 76, 34 70, 36 66Z" fill="#1a1008"/>
           <path d="M97 68 C100 75, 99 84, 95 88 L92 82 C96 76, 96 70, 94 66Z" fill="#1a1008"/>
@@ -169,32 +299,38 @@
           <ellipse cx="89" cy="76" rx="7" ry="4" fill="#ff9977" opacity="0.35"/>
           <rect x="5" y="128" width="120" height="30" rx="0" fill="#b8b8b8"/>
           <path d="M5 128 L45 110 Q65 120 85 110 L125 128Z" fill="#c2c2c2"/>
-          <ellipse cx="108" cy="138" rx="14" ry="10" fill="url(#skinS)" opacity="0.9"/>
-          <rect x="100" y="128" width="10" height="14" rx="4" fill="url(#skinS)"/>
-          <ellipse cx="98" cy="124" rx="5" ry="7" fill="url(#skinS)"/>
+          <ellipse cx="108" cy="138" rx="14" ry="10" fill="url(#skinS_b)" opacity="0.9"/>
+          <rect x="100" y="128" width="10" height="14" rx="4" fill="url(#skinS_b)"/>
+          <ellipse cx="98" cy="124" rx="5" ry="7" fill="url(#skinS_b)"/>
           <ellipse cx="65" cy="80" rx="60" ry="70" fill="none" stroke="#44aaff" stroke-width="1" opacity="0.25"/>
           <text x="14" y="50" fill="#44aaff" font-size="12" opacity="0.8">✦</text>
           <text x="106" y="44" fill="#88ddff" font-size="10" opacity="0.7">★</text>
-        </svg>
-      </div>
-      <div class="char-label santi-label">SANTIAGO</div>
+        </g>
+      </svg>
+      <div class="char-label-body santi-label-body">SANTIAGO</div>
     </div>
 
-    <div class="char-wrap">
-      <div class="speech">Let's celebrate! 🎂</div>
-      <div class="char-frame nico-frame">
-        <svg viewBox="0 0 130 155" xmlns="http://www.w3.org/2000/svg" width="130" height="155">
-          <defs>
-            <linearGradient id="bgN" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1e14"/><stop offset="100%" stop-color="#051209"/></linearGradient>
-            <linearGradient id="skinN" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8a870"/><stop offset="100%" stop-color="#c87848"/></linearGradient>
-          </defs>
-          <rect width="130" height="155" fill="url(#bgN)"/>
+    <div class="char-body nico-body">
+      <div class="speech-bubble">Let's celebrate! 🎂</div>
+      <svg viewBox="0 0 140 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bgN_b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1e14"/><stop offset="100%" stop-color="#051209"/></linearGradient>
+          <linearGradient id="skinN_b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8a870"/><stop offset="100%" stop-color="#c87848"/></linearGradient>
+        </defs>
+        <rect x="35" y="80" width="70" height="110" rx="15" fill="#1b5e20" stroke="#44dd88" stroke-width="2"/> <rect x="45" y="150" width="50" height="40" rx="10" fill="#004d40"/> <path d="M35 100 Q5 120 15 140" stroke="#e8a870" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M105 100 Q135 80 125 60" stroke="#e8a870" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M50 180 Q60 205 45 218" stroke="#004d40" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="M90 180 Q80 200 95 215" stroke="#004d40" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <rect x="35" y="213" width="25" height="10" rx="3" fill="white"/>
+        <rect x="80" y="210" width="25" height="10" rx="3" fill="white"/>
+        <g transform="translate(10, 0) scale(0.9)">
+          <rect width="130" height="155" fill="none"/>
           <ellipse cx="65" cy="175" rx="55" ry="40" fill="#222222"/>
           <path d="M45 110 Q65 118 85 110 L90 130 Q65 143 40 130 Z" fill="#1a1a1a"/>
           <polygon points="65,112 72,116 72,124 65,128 58,124 58,116" fill="#333333" stroke="#44dd88" stroke-width="1"/>
           <text x="65" y="122" text-anchor="middle" fill="#44dd88" font-size="5" font-weight="bold">ROBOTICS</text>
-          <rect x="55" y="95" width="20" height="20" rx="6" fill="url(#skinN)"/>
-          <ellipse cx="65" cy="73" rx="30" ry="33" fill="url(#skinN)"/>
+          <rect x="55" y="95" width="20" height="20" rx="6" fill="url(#skinN_b)"/>
+          <ellipse cx="65" cy="73" rx="30" ry="33" fill="url(#skinN_b)"/>
           <path d="M35 67 C35 40, 44 26, 65 24 C86 26, 95 40, 95 67 C92 54, 84 42, 65 40 C46 42, 38 54, 35 67Z" fill="#120c04"/>
           <path d="M35 67 C32 75, 33 85, 37 90 L40 83 C36 76, 36 70, 38 65Z" fill="#120c04"/>
           <path d="M95 67 C98 75, 97 85, 93 90 L90 83 C94 76, 94 70, 92 65Z" fill="#120c04"/>
@@ -223,17 +359,17 @@
           <ellipse cx="90" cy="74" rx="7" ry="4" fill="#ff8855" opacity="0.3"/>
           <rect x="5" y="128" width="120" height="30" rx="0" fill="#1e1e1e"/>
           <path d="M5 128 L45 110 Q65 118 85 110 L125 128Z" fill="#282828"/>
-          <ellipse cx="100" cy="140" rx="11" ry="9" fill="url(#skinN)" opacity="0.9"/>
-          <rect x="95" y="130" width="7" height="12" rx="3" fill="url(#skinN)"/>
-          <rect x="89" y="122" width="5" height="12" rx="2.5" fill="url(#skinN)" transform="rotate(-8 89 122)"/>
-          <rect x="96" y="121" width="5" height="12" rx="2.5" fill="url(#skinN)" transform="rotate(8 96 121)"/>
+          <ellipse cx="100" cy="140" rx="11" ry="9" fill="url(#skinN_b)" opacity="0.9"/>
+          <rect x="95" y="130" width="7" height="12" rx="3" fill="url(#skinN_b)"/>
+          <rect x="89" y="122" width="5" height="12" rx="2.5" fill="url(#skinN_b)" transform="rotate(-8 89 122)"/>
+          <rect x="96" y="121" width="5" height="12" rx="2.5" fill="url(#skinN_b)" transform="rotate(8 96 121)"/>
           <ellipse cx="65" cy="78" rx="58" ry="68" fill="none" stroke="#44dd88" stroke-width="1" opacity="0.22"/>
           <text x="12" y="48" fill="#44dd88" font-size="12" opacity="0.8">✦</text>
           <text x="108" y="42" fill="#88ffbb" font-size="10" opacity="0.7">★</text>
           <text x="110" y="115" fill="#44dd88" font-size="8" opacity="0.6">✦</text>
-        </svg>
-      </div>
-      <div class="char-label nico-label">NICO</div>
+        </g>
+      </svg>
+      <div class="char-label-body nico-label-body">NICO</div>
     </div>
   </div>
 
@@ -249,20 +385,27 @@
   </div>
 
   <div class="info-section">
-    <div class="info-card">
-      <div class="icon-wrap ic-loc">📍</div>
+    <div class="location-card">
+      <div class="icon-wrap-body ic-loc-body">📍</div>
       <div>
-        <div class="info-lbl">Let's meet at</div>
-        <div class="info-main">Moss Park</div>
-        <div class="info-sub">🕓 4:00 PM</div>
+        <div class="info-lbl-body">Let's meet at</div>
+        <div class="info-main-body">Moss Park</div>
+        <div class="info-sub-body">🕓 4:00 PM</div>
       </div>
     </div>
-    <div class="info-card">
-      <div class="icon-wrap ic-phone">📞</div>
-      <div>
-        <div class="info-lbl">Call or Text to confirm</div>
-        <div class="info-main">Carolina Perdomo</div>
-        <div class="info-sub">407-489-8563</div>
+
+    <div class="confirmation-card">
+      <div class="stamp">🎈</div>
+      <div class="conf-header">
+        <div class="icon-wrap-body ic-phone-body" style="width:30px;height:30px;font-size:16px;background:none;border-color:#d84315;">📞</div>
+        <div class="conf-title">Call or Text to confirm</div>
+      </div>
+      <div class="conf-msg">
+        Please reply to<br>
+        <strong>Carolina Perdomo</strong><br>
+        at <span class="conf-contact">
+          <a href="sms:+14074898563" class="sms-link">407-489-8563</a>
+        </span>
       </div>
     </div>
   </div>
